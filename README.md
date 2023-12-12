@@ -1,8 +1,8 @@
 # Fido2App
 
-Run client: `ng serve`
+Run client: `ng serve` in the main directory
 
-Run server: launch `Fido2ServerApplication`
+Run server: launch `Fido2ServerApplication.java`
 
 ## Code scaffolding
 

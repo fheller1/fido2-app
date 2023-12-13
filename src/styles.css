@@ -21,3 +21,11 @@ button.primary {
   color: white;
   border-radius: 8px;
 }
+
+button.secondary {
+  padding: 10px;
+  border: solid 1px var(--primary-color);
+  background: var(--accent-color);
+  color: black;
+  border-radius: 8px;
+}

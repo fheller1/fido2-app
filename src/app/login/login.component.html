@@ -1,0 +1,18 @@
+<form [formGroup]="loginForm">
+  <label for="username">Username</label>
+  <input id="username" type="text" formControlName="username">
+  <div *ngIf="!showRegisterInputs">
+    <button type="button" class="primary" (click)="login()">Login with Webauthn</button>
+    {{ ' or ' }}
+    <button type="button" class="secondary" (click)="openRegister()">Register</button>
+  </div>
+  <div *ngIf="showRegisterInputs">
+    <label for="firstname">Given name</label>
+    <input id="firstname" type="text" formControlName="firstname">
+    <label for="lastname">Family name</label>
+    <input id="lastname" type="text" formControlName="lastname">
+    <button type="button" class="primary" (click)="register()">Register with Webauthn</button>
+    {{ ' or ' }}
+    <button type="button" class="secondary" (click)="hideRegister()">Back to Login</button>
+  </div>
+</form>

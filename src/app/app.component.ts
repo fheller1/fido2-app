@@ -11,7 +11,7 @@ import { HomeComponent } from "./home/home.component";
       <main>
           <a [routerLink]="['/']">
               <header class="brand-name">
-                  <img class="brand-logo" src="/assets/logo.svg" alt="logo" aria-hidden="true">
+                  <img class="brand-logo" src="/assets/Fraunhofer_IGD_logo.png" alt="logo" aria-hidden="true">
               </header>
           </a>
           <section class="content">

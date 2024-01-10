@@ -49,12 +49,28 @@ export class LoginComponent {
         name: this.loginForm.controls.username.value,
         displayName: this.loginForm.controls.firstname.value,
       },
-      pubKeyCredParams: [{alg: -7, type: "public-key"}],
+      pubKeyCredParams: [
+        {
+          type: "public-key",
+          alg: -7
+        },
+        {
+          type: "public-key",
+          alg: -257
+        }
+      ],
       authenticatorSelection: {
-        authenticatorAttachment: "cross-platform",
+        authenticatorAttachment: "platform",
+        residentKey: "preferred",
+        requireResidentKey: false,
+        userVerification: "preferred"
       },
       timeout: 60000,
-      attestation: "direct"
+      attestation: "direct",
+      hints: [],
+      extensions: {
+        credProps: true
+      }
     };
 
     const credential = await navigator.credentials.create({

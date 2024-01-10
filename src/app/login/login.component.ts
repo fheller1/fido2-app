@@ -30,10 +30,41 @@ export class LoginComponent {
     this.showRegisterInputs = false;
   }
 
-  register(): void {
-    if(!this.loginForm.controls.username.value || !this.loginForm.controls.firstname.value || !this.loginForm.controls.lastname.value) {
+  async register(): Promise<void> {
+    if (!this.loginForm.controls.username.value || !this.loginForm.controls.firstname.value || !this.loginForm.controls.lastname.value) {
       return;
     }
+
+    const randomStringFromServer: string = "9g5rRuxfaL8WLJnc"; //TODO: replace this with server call
+    const publicKeyCredentialCreationOptions = {
+      challenge: Uint8Array.from(
+        randomStringFromServer, c => c.charCodeAt(0)),
+      rp: {
+        name: "Ambient Intelligence Mini-Praktikum",
+        id: "localhost", //TODO: replace with sub-url if rolling this out on actual url
+      },
+      user: {
+        id: Uint8Array.from(
+          this.loginForm.controls.username.value, c => c.charCodeAt(0)),
+        name: this.loginForm.controls.username.value,
+        displayName: this.loginForm.controls.firstname.value,
+      },
+      pubKeyCredParams: [{alg: -7, type: "public-key"}],
+      authenticatorSelection: {
+        authenticatorAttachment: "cross-platform",
+      },
+      timeout: 60000,
+      attestation: "direct"
+    };
+
+    const credential = await navigator.credentials.create({
+      // @ts-ignore
+      publicKey: publicKeyCredentialCreationOptions
+    });
+
+    console.log(credential);
+
+
     console.log('Register');
   }
 

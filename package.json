@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --host 0.0.0.0 --ssl --ssl-key /home/frederik/uni/fido2-app/localhost.key --ssl-cert /home/frederik/uni/fido2-app/localhost.crt",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

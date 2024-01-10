@@ -79,9 +79,6 @@ export class LoginComponent {
     });
 
     console.log(credential);
-
-
-    console.log('Register');
   }
 
   protected readonly open = open;

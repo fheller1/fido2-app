@@ -19,7 +19,7 @@ export class WebauthnService {
         id: "localhost", //TODO: replace with sub-url if rolling this out on actual url
       },
       user: {
-        id: Uint8Array.from(user.id, c => c.charCodeAt(0)),
+        id: Uint8Array.from(user.userName, c => c.charCodeAt(0)),
         name: user.userName,
         displayName: user.firstName
       },
@@ -53,7 +53,6 @@ export class WebauthnService {
     });
     if (credential === null) return null;
     user.credentialId = credential.id;
-    //this.httpService.test().subscribe((obj: any) => console.log(obj));
     this.httpService.postUser(user).subscribe((obj: any) => {
       user = obj;
     });

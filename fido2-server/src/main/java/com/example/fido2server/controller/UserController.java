@@ -5,7 +5,6 @@ import com.example.fido2server.repository.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -28,7 +27,7 @@ public class UserController {
 
   @PostMapping
   public User postUser(@RequestBody User user) {
-    User copy = user;
+
     return userRepository.save(user);
   }
 

@@ -6,7 +6,6 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -15,7 +14,6 @@ import java.util.UUID;
 public class User {
 
   @Id
-  public UUID id;
   public String userName;
   public String firstName;
   public String lastName;

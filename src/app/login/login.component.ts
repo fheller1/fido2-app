@@ -35,7 +35,7 @@ export class LoginComponent {
     this.showRegisterInputs = false;
   }
 
-  async register(): Promise<undefined> {
+  async register() {
     if (!this.loginForm.controls.username.value || !this.loginForm.controls.firstname.value || !this.loginForm.controls.lastname.value) {
       return;
     }
@@ -44,9 +44,8 @@ export class LoginComponent {
       this.loginForm.controls.firstname.value,
       this.loginForm.controls.lastname.value
     );
-    const credential = await this.webauthn.registration(user);
-    console.log(credential);
-    return undefined;
+    const returnedUser : User | null = await this.webauthn.registration(user);
+    console.log(returnedUser);
   }
 
   protected readonly open = open;

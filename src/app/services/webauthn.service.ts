@@ -9,6 +9,12 @@ export class WebauthnService {
 
   constructor(private httpService: HttpService) {}
 
+  login(userName: String): void {
+    this.httpService.getUser(userName).subscribe((obj: any) => {
+      console.log(obj);
+    });
+  }
+
   async registration(user: User): Promise<User | null> {
     const randomStringFromServer: string = "9g5rRuxfaL8WLJnc"; //TODO: replace this with server call
     const publicKeyCredentialCreationOptions = {

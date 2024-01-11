@@ -22,19 +22,6 @@ export class LoginComponent {
     { username: new FormControl(''), firstname: new FormControl(''), lastname: new FormControl('') }
   );
 
-  login(): void {
-    if(!this.loginForm.controls.username.value) return;
-    console.log('Login user ' + this.loginForm.controls.username.value);
-  }
-
-  openRegister(): void {
-    this.showRegisterInputs = true;
-  }
-
-  hideRegister(): void {
-    this.showRegisterInputs = false;
-  }
-
   async register() {
     if (!this.loginForm.controls.username.value || !this.loginForm.controls.firstname.value || !this.loginForm.controls.lastname.value) {
       return;
@@ -48,5 +35,17 @@ export class LoginComponent {
     console.log(returnedUser);
   }
 
-  protected readonly open = open;
+  login(): void {
+    if(!this.loginForm.controls.username.value) return;
+    this.webauthn.login(this.loginForm.controls.username.value);
+  }
+
+  openRegister(): void {
+    this.showRegisterInputs = true;
+  }
+
+  hideRegister(): void {
+    this.showRegisterInputs = false;
+  }
+
 }

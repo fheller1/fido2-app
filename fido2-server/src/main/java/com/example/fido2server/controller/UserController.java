@@ -3,13 +3,14 @@ package com.example.fido2server.controller;
 import com.example.fido2server.model.User;
 import com.example.fido2server.repository.UserRepository;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/user")
 public class UserController {
 
@@ -19,10 +20,15 @@ public class UserController {
     this.userRepository = userRepository;
   }
 
-  @GetMapping
+  @GetMapping(path = "/all")
   public List<User> getAllUsers() {
     Iterable<User> iterable = userRepository.findAll();
     return StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toList());
+  }
+
+  @GetMapping(path = "/{userName}")
+  public User getByUserName(@PathVariable String userName) {
+    return userRepository.findById(userName).orElseThrow();
   }
 
   @PostMapping

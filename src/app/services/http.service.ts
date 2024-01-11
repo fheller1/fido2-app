@@ -19,6 +19,10 @@ export class HttpService {
 
   constructor(private http: HttpClient) { }
 
+  getUser(userName: String): Observable<User> {
+    return this.http.get<User>(this.url + "user/" + userName);
+  }
+
   postUser(user: User): Observable<User> {
     return this.http.post<User>(this.url + "user", user);
   }

@@ -44,7 +44,7 @@ export class LoginComponent {
       this.loginForm.controls.firstname.value,
       this.loginForm.controls.lastname.value
     );
-    const credential = this.webauthn.registration(user);
+    const credential = await this.webauthn.registration(user);
     console.log(credential);
     return undefined;
   }

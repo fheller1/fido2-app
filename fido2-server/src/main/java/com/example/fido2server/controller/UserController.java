@@ -2,16 +2,14 @@ package com.example.fido2server.controller;
 
 import com.example.fido2server.model.User;
 import com.example.fido2server.repository.UserRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
@@ -29,9 +27,9 @@ public class UserController {
   }
 
   @PostMapping
-  public User postExampleUser() {
-    User example = new User(UUID.randomUUID(), "ntesla", "Nikola", "Tesla");
-    return userRepository.save(example);
+  public User postUser(@RequestBody User user) {
+    User copy = user;
+    return userRepository.save(user);
   }
 
 }

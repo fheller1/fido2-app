@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
-import {Router} from "@angular/router";
-import {HttpClient} from "@angular/common/http";
 import {User} from "../interfaces/user";
+import {HttpService} from "./http.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebauthnService {
 
-  constructor() { }
+  constructor(private httpService: HttpService) {}
 
-  registration(user: User): Promise<Credential | null> {
+  async registration(user: User): Promise<User | null> {
     const randomStringFromServer: string = "9g5rRuxfaL8WLJnc"; //TODO: replace this with server call
     const publicKeyCredentialCreationOptions = {
       challenge: Uint8Array.from(
@@ -48,10 +47,17 @@ export class WebauthnService {
       }
     };
 
-    return navigator.credentials.create({
+    const credential: Credential | null = await navigator.credentials.create({
       // @ts-ignore
       publicKey: publicKeyCredentialCreationOptions
     });
+    if (credential === null) return null;
+    user.credentialId = credential.id;
+    //this.httpService.test().subscribe((obj: any) => console.log(obj));
+    this.httpService.postUser(user).subscribe((obj: any) => {
+      user = obj;
+    });
+    return user;
   }
 
 }

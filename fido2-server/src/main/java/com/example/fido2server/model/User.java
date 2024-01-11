@@ -19,6 +19,7 @@ public class User {
   public String userName;
   public String firstName;
   public String lastName;
+  public String credentialId;
 
   public User() { }
 }

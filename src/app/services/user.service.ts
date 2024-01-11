@@ -8,19 +8,19 @@ import {User} from "../interfaces/user";
 })
 export class UserService {
   private currentUser: User | null = null;
-  private apiUrl: string = 'localhost:8000/';
+  private apiUrl: string = 'localhost:8080/';
 
   constructor(private router: Router, private http: HttpClient) {
     this.currentUser = JSON.parse(localStorage.getItem('user')!);
   }
 
-  create(properties: User): User {
-    const user: User = new User();
-    return user;
+  create(user: User): undefined {
+    this.http.post<User>(this.apiUrl + 'user', { title: "Post user"}).subscribe(data => data);
+    return;
   }
 
   login(username: string, password: string): void {
-    const user: User = new User();
+    const user: null = null;
     this.currentUser = user;
     localStorage.setItem('user', JSON.stringify(user));
     this.router.navigate(['']).then();

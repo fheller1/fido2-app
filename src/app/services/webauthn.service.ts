@@ -20,17 +20,32 @@ export class WebauthnService {
         id: "localhost", //TODO: replace with sub-url if rolling this out on actual url
       },
       user: {
-        id: Uint8Array.from(
-          user.id, c => c.charCodeAt(0)),
-        name: user.username,
-        displayName: user.firstname,
+        id: Uint8Array.from(user.id, c => c.charCodeAt(0)),
+        name: user.userName,
+        displayName: user.firstName
       },
-      pubKeyCredParams: [{alg: -7, type: "public-key"}],
+      pubKeyCredParams: [
+        {
+          type: "public-key",
+          alg: -7
+        },
+        {
+          type: "public-key",
+          alg: -257
+        }
+      ],
       authenticatorSelection: {
-        authenticatorAttachment: "cross-platform",
+        authenticatorAttachment: "platform",
+        residentKey: "preferred",
+        requireResidentKey: false,
+        userVerification: "preferred"
       },
       timeout: 60000,
-      attestation: "direct"
+      attestation: "direct",
+      hints: [],
+      extensions: {
+        credProps: true
+      }
     };
 
     return navigator.credentials.create({

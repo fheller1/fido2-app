@@ -1,13 +1,13 @@
 export class User {
   id!: string;
-  username!: string;
-  firstname!: string;
-  lastname!: string;
+  userName!: string;
+  firstName?: string;
+  lastName?: string;
 
-  constructor() {
-    this.id = "0";
-    this.username = 'ntesla';
-    this.username = 'Nikola';
-    this.lastname = 'Tesla';
+  constructor(userName: string, firstName: string, lastName: string) {
+    this.id = crypto.randomUUID();
+    this.userName = userName;
+    this.firstName = firstName;
+    this.lastName = lastName;
   }
 }

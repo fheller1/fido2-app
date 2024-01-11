@@ -8,7 +8,7 @@ import {User} from "../interfaces/user";
 })
 export class WebauthnService {
 
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor() { }
 
   registration(user: User): Promise<Credential | null> {
     const randomStringFromServer: string = "9g5rRuxfaL8WLJnc"; //TODO: replace this with server call

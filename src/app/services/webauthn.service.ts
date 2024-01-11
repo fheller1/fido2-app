@@ -9,9 +9,26 @@ export class WebauthnService {
 
   constructor(private httpService: HttpService) {}
 
-  login(userName: String): void {
+  async login(userName: String) {
+    let credentialId: string = "";
     this.httpService.getUser(userName).subscribe((obj: any) => {
-      console.log(obj);
+      credentialId = obj.credentialId;
+    });
+    const randomStringFromServer: string = "9g5rRuxfaL8WLJnc"; //TODO: replace this with server call
+    const publicKeyCredentialRequestOptions = {
+      challenge: Uint8Array.from(
+        randomStringFromServer, c => c.charCodeAt(0)),
+      //allowCredentials: [{
+      //  id: Uint8Array.from(
+      //    credentialId, c => c.charCodeAt(0)),
+      //  type: 'public-key',
+      //}],
+      timeout: 60000,
+    }
+
+    const assertion = await navigator.credentials.get({
+      // @ts-ignore
+      publicKey: publicKeyCredentialRequestOptions
     });
   }
 

@@ -37,7 +37,7 @@ export class LoginComponent {
 
   login(): void {
     if(!this.loginForm.controls.username.value) return;
-    this.webauthn.login(this.loginForm.controls.username.value);
+    this.webauthn.login(this.loginForm.controls.username.value).then();
   }
 
   openRegister(): void {

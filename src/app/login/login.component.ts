@@ -23,13 +23,11 @@ export class LoginComponent {
   );
 
   async register() {
-    if (!this.loginForm.controls.username.value || !this.loginForm.controls.firstname.value || !this.loginForm.controls.lastname.value) {
+    if (!this.loginForm.controls.username.value) {
       return;
     }
     const user: User = new User(
-      this.loginForm.controls.username.value,
-      this.loginForm.controls.firstname.value,
-      this.loginForm.controls.lastname.value
+      this.loginForm.controls.username.value
     );
     const returnedUser : User | null = await this.webauthn.registration(user);
     console.log(returnedUser);

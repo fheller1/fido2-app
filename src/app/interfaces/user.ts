@@ -4,10 +4,8 @@ export class User {
   lastName?: string;
   credentialId?: string;
 
-  constructor(userName: string, firstName: string, lastName: string) {
+  constructor(userName: string) {
     this.userName = userName;
-    this.firstName = firstName;
-    this.lastName = lastName;
   }
 
   setCredentialId(credentialId: string) {

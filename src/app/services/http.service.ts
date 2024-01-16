@@ -28,7 +28,7 @@ export class HttpService {
     return this.http.post<User>(this.url + "register", user);
   }
 
-  getOptions(userName: string): Observable<PublicKeyCredentialCreationOptions> {
+  getRegistrationOptions(userName: string): Observable<PublicKeyCredentialCreationOptions> {
     return this.http.post<PublicKeyCredentialCreationOptions>(this.pyUrl + "register", {userName: userName});
   }
 
@@ -40,8 +40,8 @@ export class HttpService {
     return this.http.post<PublicKeyCredentialRequestOptions>(this.pyUrl + "login", {userName: userName});
   }
 
-  verifyLogin(credential: Credential, userName: string) {
-
+  verifyLogin(assertion: Credential, userName: string) {
+    return this.http.post<any>(this.pyUrl + "login-verify", {assertion, userName});
   }
 
   private handleError(error: HttpErrorResponse) {

@@ -27,14 +27,18 @@ export class WebauthnService {
     const assertion = await navigator.credentials.get({
       publicKey: options
     });
+    if (assertion === null) {
+      console.log('Assertion creation failed!');
+      return undefined;
+    }
 
-    const validation = null;
+    const validation = await firstValueFrom(this.httpService.verifyLogin(assertion, userName));
 
-    console.log(assertion);
+    console.log(validation);
   }
 
   async registration(user: User) {
-    const options = await firstValueFrom(this.httpService.getOptions(user.userName)).catch(err => {return err;});
+    const options = await firstValueFrom(this.httpService.getRegistrationOptions(user.userName)).catch(err => {return err;});
     if (options.status && options.status === 409) {
       return options;
     }

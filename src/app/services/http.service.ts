@@ -33,7 +33,15 @@ export class HttpService {
   }
 
   verifyRegistration(credential: Credential, userName: string) {
-    return this.http.post<any>(this.pyUrl + "register/verify", {credential: credential, userName: userName});
+    return this.http.post<any>(this.pyUrl + "register-verify", {credential: credential, userName: userName});
+  }
+
+  getLoginOptions(userName: string): Observable<PublicKeyCredentialRequestOptions> {
+    return this.http.post<PublicKeyCredentialRequestOptions>(this.pyUrl + "login", {userName: userName});
+  }
+
+  verifyLogin(credential: Credential, userName: string) {
+
   }
 
   private handleError(error: HttpErrorResponse) {

@@ -27,6 +27,7 @@ user_id = {}
 def get_credential_creation_options():
     data = request.get_json()
     id = token_bytes(8)
+
     user_id[data['userName']] = id
 
     options = generate_registration_options(
@@ -43,11 +44,10 @@ def get_credential_creation_options():
 @api.route('/register/verify', methods=['POST'])
 def validate_registration():
     try:
-        expected_challenge = db[request.get_json()['userName']]['challenge']
+        userName = request.get_json()['userName']
+        expected_challenge = db[userName]['challenge']
     except:
         abort(404)
-
-    print(expected_challenge)
 
     verification = verify_registration_response(
         credential=request.get_json()['credential'],
@@ -56,9 +56,15 @@ def validate_registration():
         expected_origin='http://localhost:4200',
         require_user_verification=True
     )
+    
+    db[userName]['credential_id'] = verification.credential_id
+    db[userName]['public_key'] = verification.credential_public_key
+
+    return {"hallo": "hallo"}
 
     return Response()
 
 
 if __name__ == '__main__':
+    api.debug = True
     api.run()

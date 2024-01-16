@@ -4,6 +4,7 @@ import { provideRouter } from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
 import routeConfig from "./app/routes";
 import {importProvidersFrom} from "@angular/core";
+import { CommonModule } from "@angular/common";
 
 bootstrapApplication(AppComponent,
   {

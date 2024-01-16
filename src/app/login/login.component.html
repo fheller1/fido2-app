@@ -1,6 +1,6 @@
 <form [formGroup]="loginForm">
   <label for="username">Username</label>
-  <input id="username" type="text" formControlName="username">
+  <input id="username" type="text" formControlName="username" autoComplete="username webauthn">
   <div *ngIf="!showRegisterInputs">
     <button type="button" class="primary" (click)="login()">Login with Webauthn</button>
     {{ ' or ' }}

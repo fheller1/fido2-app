@@ -2,9 +2,9 @@
   <label for="username">Username</label>
   <input id="username" type="text" formControlName="username" autoComplete="username webauthn">
   <div *ngIf="!showRegisterInputs">
-    <button type="button" class="primary" (click)="login()">Login with Webauthn</button>
+    <button type="button" class="primary" [disabled]="!buttonsActive" (click)="login()">Login with Webauthn</button>
     {{ ' or ' }}
-    <button type="button" class="secondary" (click)="register()">Register</button>
+    <button type="button" class="secondary" [disabled]="!buttonsActive" (click)="register()">Register</button>
   </div>
   <div class="status-text" layout-margin *ngIf="statusText" [ngStyle]="{'color': statusColor}">
     {{ statusText }}

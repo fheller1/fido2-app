@@ -48,10 +48,10 @@ export class WebauthnService {
     }
   }
 
-  async registration(user: User) {
+  async registration(user: User): Promise<number> {
     const options = await firstValueFrom(this.httpService.getRegistrationOptions(user.userName)).catch(err => {return err;});
     if (options.status && options.status === 409) {
-      return options;
+      return 1;
     }
     // @ts-ignore convert base64url string representation to byte array
     options.challenge = new Uint8Array([...atob(options.challenge.replace(/-/g, '+').replace(/_/g, '/'))]
@@ -65,13 +65,13 @@ export class WebauthnService {
     });
     if (credential === null) {
       console.log('Credential creation failed!');
-      return undefined;
+      return 2;
     }
     const verification = await firstValueFrom(this.httpService.verifyRegistration(credential, user.userName)).catch(err => {return err;});
     if (verification.status === 500 || verification.status === 404 ) {
-      return verification
+      return 3;
     }
-    return user;
+    return 0;
   }
 
 }

@@ -9,7 +9,9 @@ body {
 }
 :root {
   --primary-color: #179c7d;
+  --primary-grey: #717171;
   --secondary-color: #7cccbc;
+  --secondary-grey: #B2B2B2;
   --accent-color: #d9ede9;
   --shadow-color: #E8E8E8;
 }

@@ -2,6 +2,11 @@
   margin-top: 10px;
 }
 
+.center {
+  width: 500px;
+  margin: auto;
+}
+
 .listing-photo {
   height: 600px;
   width: 50%;

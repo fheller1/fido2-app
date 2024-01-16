@@ -10,6 +10,7 @@ import {Observable, throwError} from "rxjs";
 export class HttpService {
 
   url: string = "http://localhost:8080/";
+  pyUrl: string = "http://localhost:5000/"
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
@@ -24,7 +25,15 @@ export class HttpService {
   }
 
   postUser(user: User): Observable<User> {
-    return this.http.post<User>(this.url + "user", user);
+    return this.http.post<User>(this.url + "register", user);
+  }
+
+  getOptions(userName: string): Observable<PublicKeyCredentialCreationOptions> {
+    return this.http.post<PublicKeyCredentialCreationOptions>(this.pyUrl + "register", {userName: userName});
+  }
+
+  verifyRegistration(credential: Credential, userName: string) {
+    return this.http.post<any>(this.pyUrl + "register/verify", {credential: credential, userName: userName});
   }
 
   private handleError(error: HttpErrorResponse) {

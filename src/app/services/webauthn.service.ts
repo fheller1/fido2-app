@@ -10,14 +10,20 @@ export class WebauthnService {
 
   constructor(private httpService: HttpService) {}
 
-  async login(userName: string) {
-    const options: PublicKeyCredentialRequestOptions = await firstValueFrom(this.httpService.getLoginOptions(userName));
+  async login(userName: string): Promise<number> {
+    let status: number = 0;
+    // @ts-ignore
+    const options: PublicKeyCredentialRequestOptions = await firstValueFrom(this.httpService.getLoginOptions(userName))
+       .catch(err => {if (err.status === 404) status = 404;});
+    if (status === 404) {
+      return 1;
+    }
     if (options.allowCredentials) {
-      options.allowCredentials.forEach(cred => {
+      options.allowCredentials.forEach(credential => {
         // @ts-ignore
-        cred.id = new Uint8Array([...atob(cred.id.replace(/-/g, '+').replace(/_/g, '/'))]
+        credential.id = new Uint8Array([...atob(credential.id.replace(/-/g, '+').replace(/_/g, '/'))]
           .map(char => char.charCodeAt(0))).buffer;
-        return cred;
+        return credential;
       })
     }
     // @ts-ignore
@@ -29,12 +35,17 @@ export class WebauthnService {
     });
     if (assertion === null) {
       console.log('Assertion creation failed!');
-      return undefined;
+      return 2;
     }
 
-    const validation = await firstValueFrom(this.httpService.verifyLogin(assertion, userName));
-
-    console.log(validation);
+    const response = await firstValueFrom(this.httpService.verifyLogin(assertion, userName));
+    if (response.status === 404 || response.status === 403) {
+      return 3;
+    } else {
+      localStorage.setItem('userName', userName);
+      localStorage.setItem('session', response.session);
+      return 0;
+    }
   }
 
   async registration(user: User) {

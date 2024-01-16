@@ -119,7 +119,7 @@ def validate_login():
     db[userName]['session'] = session
     db[userName]['session_started'] = int(time.time())
 
-    return '{\"session\": \"' + bytes_to_base64url(session) + '\"}'
+    return '{\"status\": 200, \"session\": \"' + bytes_to_base64url(session) + '\"}'
 
 
 @api.route('/get-data', methods=['GET'])

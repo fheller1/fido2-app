@@ -6,6 +6,9 @@
     {{ ' or ' }}
     <button type="button" class="secondary" (click)="register()">Register</button>
   </div>
+  <div class="status-text" layout-margin *ngIf="statusText" [ngStyle]="{'color': statusColor}">
+    {{ statusText }}
+  </div>
   <div *ngIf="showRegisterInputs">
     <label for="firstname">Given name</label>
     <input id="firstname" type="text" formControlName="firstname">

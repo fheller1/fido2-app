@@ -19,13 +19,29 @@ export class HttpService {
 
   constructor(private http: HttpClient) { }
 
+  bytesToBase64Url = (arrayBuffer: ArrayBuffer) => (
+    // @ts-ignore
+    btoa(String.fromCharCode.apply(null, new Uint8Array(arrayBuffer))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+  );
+
   getRegistrationOptions(userName: string): Observable<PublicKeyCredentialCreationOptions> {
     return this.http.post<PublicKeyCredentialCreationOptions>(this.pyUrl + "register", {userName: userName});
   }
 
-  verifyRegistration(credential: Credential, userName: string) {
-    console.log("credential: ", credential);
-    return this.http.post<any>(this.pyUrl + "register-verify", credential);
+  verifyRegistration(credential: PublicKeyCredential, userName: string) {
+    return this.http.post<any>(this.pyUrl + "register-verify", {credential: {
+      // @ts-ignore
+      authenticatorAttachement: credential.authenticatorAttachement,
+      id: credential.id,
+      // @ts-ignore
+      rawId: this.bytesToBase64Url(credential.rawId),
+      response: {
+        // @ts-ignore
+        attestationObject: this.bytesToBase64Url(credential.response.attestationObject),
+        clientDataJSON: this.bytesToBase64Url(credential.response.clientDataJSON)
+      },
+      type: credential.type
+    }, userName});
   }
 
   getLoginOptions(userName: string): Observable<PublicKeyCredentialRequestOptions> {
@@ -33,7 +49,23 @@ export class HttpService {
   }
 
   verifyLogin(assertion: Credential, userName: string) {
-    return this.http.post<any>(this.pyUrl + "login-verify", {assertion, userName});
+    console.log(assertion);
+    return this.http.post<any>(this.pyUrl + "login-verify", {assertion: {
+      // @ts-ignore
+      authenticatorAttachement: assertion.authenticatorAttachement,
+      id: assertion.id,
+      // @ts-ignore
+      rawId: this.bytesToBase64Url(assertion.rawId),
+      response: {
+        // @ts-ignore
+        authenticatorData: this.bytesToBase64Url(assertion.response.authenticatorData),
+        // @ts-ignore
+        clientDataJSON: this.bytesToBase64Url(assertion.response.clientDataJSON),
+        // @ts-ignore
+        signature: this.bytesToBase64Url(assertion.response.signature)
+      },
+      type: assertion.type
+    }, userName});
   }
 
   private handleError(error: HttpErrorResponse) {

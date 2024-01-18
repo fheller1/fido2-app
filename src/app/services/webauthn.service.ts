@@ -32,7 +32,7 @@ export class WebauthnService {
 
     const assertion = await navigator.credentials.get({
       publicKey: options
-    });
+    }).catch(err => {return null});
     if (assertion === null) {
       console.log('Assertion creation failed!');
       return 2;
@@ -62,7 +62,7 @@ export class WebauthnService {
     const credential: Credential | null = await navigator.credentials.create({
       // @ts-ignore
       publicKey: options
-    });
+    }).catch(err => {return null});
     if (credential === null) {
       console.log('Credential creation failed!');
       return 2;
@@ -71,7 +71,7 @@ export class WebauthnService {
     if (verification.status === 500 || verification.status === 404 ) {
       return 3;
     }
-    return 0;
+        return 0;
   }
 
 }

@@ -3,6 +3,7 @@ import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {NgIf, NgStyle} from "@angular/common";
 import {WebauthnService} from "../services/webauthn.service"
 import {User} from "../interfaces/user";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ import {User} from "../interfaces/user";
 })
 export class LoginComponent {
 
-  constructor(private webauthn: WebauthnService) {}
+  constructor(private webauthn: WebauthnService, private router: Router) {}
 
   showRegisterInputs: boolean = false;
   statusText: string = '';
@@ -72,6 +73,8 @@ export class LoginComponent {
     if (response === 0) {
       this.statusColor = 'green';
       this.statusText = 'Successfully authenticated identity!'
+      this.buttonsActive = true;
+      this.router.navigate(['/']);
     }
     else if (response === 1) {
       this.statusColor = 'red';

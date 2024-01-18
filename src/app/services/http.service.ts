@@ -28,7 +28,7 @@ export class HttpService {
     return this.http.post<PublicKeyCredentialCreationOptions>(this.pyUrl + "register", {userName: userName});
   }
 
-  verifyRegistration(credential: PublicKeyCredential, userName: string) {
+  verifyRegistration(credential: Credential, userName: string) {
     return this.http.post<any>(this.pyUrl + "register-verify", {credential: {
       // @ts-ignore
       authenticatorAttachement: credential.authenticatorAttachement,
@@ -38,6 +38,7 @@ export class HttpService {
       response: {
         // @ts-ignore
         attestationObject: this.bytesToBase64Url(credential.response.attestationObject),
+        // @ts-ignore
         clientDataJSON: this.bytesToBase64Url(credential.response.clientDataJSON)
       },
       type: credential.type

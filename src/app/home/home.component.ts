@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {WebauthnService} from "../services/webauthn.service"
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private webauthn: WebauthnService) {}
 
   userName: string = '';
 
@@ -21,4 +22,12 @@ export class HomeComponent implements OnInit {
     }
     this.userName = userName;
   }
+
+
+  logout(): void {
+    console.log('Logging out...');
+    this.webauthn.logout();
+    this.router.navigate(['/login']);
+  }
+
 }

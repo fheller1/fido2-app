@@ -91,12 +91,4 @@ export class LoginComponent {
     this.buttonsActive = true;
   }
 
-  openRegister(): void {
-    this.showRegisterInputs = true;
-  }
-
-  hideRegister(): void {
-    this.showRegisterInputs = false;
-  }
-
 }

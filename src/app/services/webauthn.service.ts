@@ -10,6 +10,11 @@ export class WebauthnService {
 
   constructor(private httpService: HttpService) {}
 
+  logout(): void {
+    localStorage.removeItem('userName');
+    localStorage.removeItem('session');
+  }
+
   async login(userName: string): Promise<number> {
     let status: number = 0;
     // @ts-ignore
@@ -49,7 +54,10 @@ export class WebauthnService {
   }
 
   async registration(user: User): Promise<number> {
-    const options = await firstValueFrom(this.httpService.getRegistrationOptions(user.userName)).catch(err => {return err;});
+    const options = await firstValueFrom(this.httpService
+      .getRegistrationOptions(user.userName))
+      .catch(err => {return err;}
+    );
     if (options.status && options.status === 409) {
       return 1;
     }
@@ -67,7 +75,10 @@ export class WebauthnService {
       console.log('Credential creation failed!');
       return 2;
     }
-    const verification = await firstValueFrom(this.httpService.verifyRegistration(credential, user.userName)).catch(err => {return err;});
+    const verification = await firstValueFrom(this.httpService
+      .verifyRegistration(credential, user.userName))
+      .catch(err => {return err;}
+    );
     if (verification.status === 500 || verification.status === 404 ) {
       return 3;
     }

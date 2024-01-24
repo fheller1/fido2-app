@@ -10,7 +10,12 @@ export class WebauthnService {
 
   constructor(private httpService: HttpService) {}
 
-  logout(): void {
+  async logout(): Promise<void> {
+    const userName = localStorage.getItem('userName');
+    const session = localStorage.getItem('session');
+    if (userName && session) {
+      await firstValueFrom(this.httpService.logout(userName));
+    }
     localStorage.removeItem('userName');
     localStorage.removeItem('session');
   }

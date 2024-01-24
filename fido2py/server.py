@@ -14,7 +14,6 @@ from webauthn.helpers.structs import (
     PublicKeyCredentialDescriptor,
 )
 import time
-import waitress
 
 def create_app():
 
@@ -44,6 +43,7 @@ def create_app():
         # save challenge for user trying to authenticate
         db[userName] = { "challenge": options.challenge }
 
+        print("Created credential creation challenge for user " + userName + ".")
         return options_to_json(options)
 
     @api.route('/register-verify', methods=['POST'])
@@ -66,6 +66,7 @@ def create_app():
         db[userName]['public_key'] = verification.credential_public_key
         del db[userName]['challenge']
 
+        print("Successfully validated user " + userName + "\'s credential.")
         return {"status": 200}
 
 
@@ -86,6 +87,7 @@ def create_app():
             user_verification=UserVerificationRequirement.REQUIRED
         )
 
+        print("Created credential request challenge for user " + userName + ".")
         return options_to_json(options)
 
 
@@ -122,7 +124,21 @@ def create_app():
         db[userName]['session'] = session
         db[userName]['session_started'] = int(time.time())
 
+        print("Successfully validated user " + userName + "\'s credential to login and saved its session.")
         return '{\"status\": 200, \"session\": \"' + bytes_to_base64url(session) + '\"}'
+    
+
+    @api.route('/logout', methods=['POST'])
+    def logout():
+        userName = request.get_json()['userName']
+        try:
+            del db[userName]['session']
+            del db[userName]['session_started']
+        except:
+            abort(404)
+        
+        print("Successfully logged out user " + userName + ".")
+        return {"status": 200}
 
 
     @api.route('/', methods=['GET'])

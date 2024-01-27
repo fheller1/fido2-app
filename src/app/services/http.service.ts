@@ -9,7 +9,9 @@ import {Observable, throwError} from "rxjs";
 })
 export class HttpService {
 
-  pyUrl: string = "http://localhost:8080/"
+  apiUrl: string = "http://localhost:5000/"
+  // apiUrl: string = "http://fido2.igd.fraunhofer.de"
+
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
@@ -25,11 +27,11 @@ export class HttpService {
   );
 
   getRegistrationOptions(userName: string): Observable<PublicKeyCredentialCreationOptions> {
-    return this.http.post<PublicKeyCredentialCreationOptions>(this.pyUrl + "register", {userName: userName});
+    return this.http.post<PublicKeyCredentialCreationOptions>(this.apiUrl + "register", {userName: userName});
   }
 
   verifyRegistration(credential: Credential, userName: string) {
-    return this.http.post<any>(this.pyUrl + "register-verify", {credential: {
+    return this.http.post<any>(this.apiUrl + "register-verify", {credential: {
       // @ts-ignore
       authenticatorAttachement: credential.authenticatorAttachement,
       id: credential.id,
@@ -46,12 +48,12 @@ export class HttpService {
   }
 
   getLoginOptions(userName: string): Observable<PublicKeyCredentialRequestOptions> {
-    return this.http.post<PublicKeyCredentialRequestOptions>(this.pyUrl + "login", {userName: userName});
+    return this.http.post<PublicKeyCredentialRequestOptions>(this.apiUrl + "login", {userName: userName});
   }
 
   verifyLogin(assertion: Credential, userName: string) {
     console.log(assertion);
-    return this.http.post<any>(this.pyUrl + "login-verify", {assertion: {
+    return this.http.post<any>(this.apiUrl + "login-verify", {assertion: {
       // @ts-ignore
       authenticatorAttachement: assertion.authenticatorAttachement,
       id: assertion.id,
@@ -70,7 +72,7 @@ export class HttpService {
   }
   
   logout(userName: string): Observable<any> {
-    return this.http.post<any>(this.pyUrl + "logout", {userName: userName});
+    return this.http.post<any>(this.apiUrl + "logout", {userName: userName});
   }
 
 }

@@ -1,4 +1,4 @@
-from flask import Flask, json, request, abort, Response
+from flask import Flask, request, abort, Response
 from flask_cors import CORS
 from secrets import token_bytes
 from webauthn import (
@@ -18,7 +18,7 @@ import time
 def create_app():
 
     api = Flask(__name__)
-    CORS(api, origins=["http://localhost:4200"])
+    CORS(api, origins=["http://fido2.igd.fraunhofer.de", "http://localhost:4200", "http://localhost"])
 
     db = {}
     user_id = {}

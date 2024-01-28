@@ -81,6 +81,12 @@ input {
   }
 }
 
+.login {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 .login > input {
   background-color: rgb(213, 213, 213);
   border-radius: 100px;
@@ -108,7 +114,7 @@ input {
 }
 
 .controls > button {
-  width: 100%;
+  width: 200px;
   border-radius: 100px;
   max-width: 200px;
   margin-bottom: 10px;

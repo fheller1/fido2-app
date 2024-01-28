@@ -1,0 +1,37 @@
+
+:host {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+.frame {
+    align-items: center;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+.frame-widget {
+    border-radius: 40px;
+    box-shadow: 0px 0px 30px #464646;
+    justify-content: center;
+    padding: 80px;
+}
+.frame-full {
+    height: 100%;
+    width: 80%
+}
+.frame-full > a {
+    margin: 40px 0px;
+}
+
+.brand-name {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.brand-logo {
+    width: 80%;
+}

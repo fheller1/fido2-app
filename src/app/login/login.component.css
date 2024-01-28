@@ -1,5 +1,7 @@
 .status-text {
-  margin-top: 10px;
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
 }
 
 .center {
@@ -77,4 +79,52 @@ input {
     width: 100%;
     height: 400px;
   }
+}
+
+.login > input {
+  background-color: rgb(213, 213, 213);
+  border-radius: 100px;
+  border: none;
+  margin: 0px 0px 40px 0px;
+  font-size: 15px;
+  padding: 15px;
+}
+
+.login > label {
+  margin: 20px 0px 30px 0px;
+  color: var(--primary-color);
+  font-weight: bold;
+  font-size: 30px;
+  text-transform: unset;
+  display: flex;
+  justify-content: center;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.controls > button {
+  width: 100%;
+  border-radius: 100px;
+  max-width: 200px;
+  margin-bottom: 10px;
+}
+
+.controls > label {
+  color: unset;
+  font-size: 10px;
+  font-weight: unset;
+  text-transform: unset;
+}
+
+.button-link {
+  text-decoration: underline;
+  color: purple;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }

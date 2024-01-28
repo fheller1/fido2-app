@@ -6,6 +6,7 @@
 
 body {
   font-family: 'Be Vietnam Pro', sans-serif;
+  height: 100%;
 }
 :root {
   --primary-color: #179c7d;
@@ -14,6 +15,7 @@ body {
   --secondary-grey: #B2B2B2;
   --accent-color: #d9ede9;
   --shadow-color: #E8E8E8;
+  height: 100%;
 }
 
 button.primary {

@@ -11,7 +11,7 @@ const routeConfig: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    title: 'Log in'
+    title: 'Log In'
   }
 ];
 

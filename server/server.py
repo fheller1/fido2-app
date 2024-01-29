@@ -1,3 +1,5 @@
+#! /usr/bin/python
+
 from flask import Flask, request, abort, Response
 from flask_cors import CORS
 from secrets import token_bytes
@@ -18,7 +20,7 @@ import time
 def create_app():
 
     api = Flask(__name__)
-    CORS(api, origins=["http://fido2.igd.fraunhofer.de", "http://localhost:4200", "http://localhost"])
+    CORS(api, origins=["http://fido2.igd.fraunhofer.de", "https://fido2.igd.fraunhofer.de", "http://localhost"])
 
     db = {}
     user_id = {}
@@ -35,7 +37,7 @@ def create_app():
         user_id[userName] = id
 
         options = generate_registration_options(
-            rp_id="localhost",
+            rp_id="igd.fraunhofer.de",
             rp_name="AmbI Mini-Praktikum",
             user_name=userName,
             user_id=id
@@ -57,8 +59,8 @@ def create_app():
         verification = verify_registration_response(
             credential=request.get_json()['credential'],
             expected_challenge=expected_challenge,
-            expected_rp_id='localhost',
-            expected_origin='http://localhost:4200',
+            expected_rp_id='igd.fraunhofer.de',
+            expected_origin='http://fido2.igd.fraonhofer.de',
             require_user_verification=True
         )
         
@@ -81,7 +83,7 @@ def create_app():
         db[userName]['login_challenge'] = challenge
         db[userName]['sign_count'] = 0
         options = generate_authentication_options(
-            rp_id='localhost',
+            rp_id='igd.fraunhofer.de',
             challenge=challenge,
             allow_credentials=[PublicKeyCredentialDescriptor(id=credential_id)],
             user_verification=UserVerificationRequirement.REQUIRED
@@ -108,8 +110,8 @@ def create_app():
             verification = verify_authentication_response(
                 credential=assertion,
                 expected_challenge=expected_challenge,
-                expected_rp_id='localhost',
-                expected_origin='http://localhost:4200',
+                expected_rp_id='igd.fraunhofer.de',
+                expected_origin='http://fido2.igd.fraunhofer.de',
                 credential_public_key=public_key,
                 credential_current_sign_count=sign_count,
                 require_user_verification=True
@@ -146,3 +148,8 @@ def create_app():
         return Response()
     
     return api
+
+
+if __name__ == '__main__':
+    api = create_app()
+    api.run()

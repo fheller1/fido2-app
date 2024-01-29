@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
     const userName = localStorage.getItem('userName');
     if (!userName || userName.trim() === '') {
       console.log('User not logged in! Redirecting to login page...');
-      // this.router.navigate(['/login']);
+      this.router.navigate(['/login']);
       return;
     }
     this.userName = userName;

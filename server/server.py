@@ -20,7 +20,7 @@ import time
 def create_app():
 
     api = Flask(__name__)
-    CORS(api, origins=["http://fido2.igd.fraunhofer.de", "https://fido2.igd.fraunhofer.de", "http://localhost"])
+    CORS(api, origins=["http://fido2.igd.fraunhofer.de", "https://fido2.igd.fraunhofer.de"])
 
     db = {}
     user_id = {}

@@ -13,11 +13,11 @@ export class WebauthnService {
   async logout(): Promise<void> {
     const userName = localStorage.getItem('userName');
     const session = localStorage.getItem('session');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('session');
     if (userName && session) {
       await firstValueFrom(this.httpService.logout(userName));
     }
-    localStorage.removeItem('userName');
-    localStorage.removeItem('session');
   }
 
   async login(userName: string): Promise<number> {

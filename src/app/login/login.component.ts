@@ -67,9 +67,19 @@ export class LoginComponent {
       this.buttonsActive = true;
       return;
     }
+    const inputUsername = this.loginForm.controls.username.value;
+    const trimmedUsername = inputUsername.trim();
+    // function that checks whether username contains only letters and numbers
+    const regex = /^[a-z0-9]+$/i;
+    if(!regex.test(trimmedUsername)) {
+      this.statusColor = 'red';
+      this.statusText = 'Username must contain only letters and numbers.'
+      this.buttonsActive = true;
+      return;
+    }
     this.statusColor = 'black';
     this.statusText = 'Authenticating, please wait.';
-    const response: number = await this.webauthn.login(this.loginForm.controls.username.value);
+    const response: number = await this.webauthn.login(trimmedUsername);
     if (response === 0) {
       this.statusColor = 'green';
       this.statusText = 'Successfully authenticated identity!'

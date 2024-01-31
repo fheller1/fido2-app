@@ -9,7 +9,7 @@ import {Observable, throwError} from "rxjs";
 })
 export class HttpService {
 
-  apiUrl: string = "http://fido2.igd.fraunhofer.de/api/"
+  apiUrl: string = "https://fido2.igd.fraunhofer.de/api/"
 
   httpOptions = {
     headers: new HttpHeaders({

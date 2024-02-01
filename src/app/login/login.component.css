@@ -2,6 +2,8 @@
   margin-top: 40px;
   display: flex;
   justify-content: center;
+  max-width: calc(90% - 100px);
+  text-align: center;
 }
 
 .center {
@@ -69,6 +71,7 @@ input {
   margin-bottom: 15px;
   padding: 10px;
   width: 400px;
+  max-width: calc(90% - 100px);
   border-top: none;
   border-right: none;
   border-left: none;

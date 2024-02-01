@@ -8,6 +8,7 @@ body {
   font-family: 'Be Vietnam Pro', sans-serif;
   height: 100%;
 }
+
 :root {
   --primary-color: #179c7d;
   --primary-grey: #717171;
@@ -32,4 +33,10 @@ button.secondary {
   background: var(--accent-color);
   color: black;
   border-radius: 8px;
+}
+
+@media  screen and (max-width: 450px) {
+  body, :root {
+    overflow: hidden;
+  }
 }

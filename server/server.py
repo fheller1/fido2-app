@@ -127,7 +127,7 @@ def create_app():
         db.session.commit()
 
         options = generate_authentication_options(
-            rp_id='localhost',
+            rp_id='igd.fraunhofer.de',
             challenge=challenge,
             allow_credentials=[PublicKeyCredentialDescriptor(id=credential_id)],
             user_verification=UserVerificationRequirement.REQUIRED

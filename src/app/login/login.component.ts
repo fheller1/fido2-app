@@ -39,7 +39,7 @@ export class LoginComponent {
       this.loginForm.controls.username.value
     );
     const response: number = await this.webauthn.registration(user);
-    if (response === 0) {
+    if (response === 200) {
       this.statusColor = 'green';
       this.statusText = 'Successfully registered user! You can now log in.'
     }
@@ -49,11 +49,23 @@ export class LoginComponent {
     } 
     else if (response === 2) {
       this.statusColor = 'red';
-      this.statusText = 'An error occured while attempting to create the credential. Please try again.'
+      this.statusText = 'You canceled credential creation, or an error occured. Please try again.'
     }
     else if (response === 3) {
       this.statusColor = 'red';
-      this.statusText = 'An error occured while attempting to verify the credential. Please try again.'
+      this.statusText = 'An error occured. Please try again.'
+    }
+    else if (response === 4) {
+      this.statusColor = 'red';
+      this.statusText = 'Please check your network connection.'
+    }
+    else if (response === 5) {
+      this.statusColor = 'red';
+      this.statusText = 'A server error occured.'
+    }
+    else if (response === 6) {
+      this.statusColor = 'red';
+      this.statusText = 'An unknown error occured.'
     }
     this.buttonsActive = true;
   }
@@ -80,7 +92,7 @@ export class LoginComponent {
     this.statusColor = 'black';
     this.statusText = 'Authenticating, please wait.';
     const response: number = await this.webauthn.login(trimmedUsername);
-    if (response === 0) {
+    if (response === 200) {
       this.statusColor = 'green';
       this.statusText = 'Successfully authenticated identity!'
       this.buttonsActive = true;
@@ -92,11 +104,23 @@ export class LoginComponent {
     } 
     else if (response === 2) {
       this.statusColor = 'red';
-      this.statusText = 'An error occured while attempting to obtain the credential. Please try again.'
+      this.statusText = 'You canceled credential verification, or an error occured. Please try again.'
     }
     else if (response === 3) {
       this.statusColor = 'red';
       this.statusText = 'An error occured while attempting to verify the credential. Please try again.'
+    }
+    else if (response === 4) {
+      this.statusColor = 'red';
+      this.statusText = 'Please check your network connection.'
+    }
+    else if (response === 5) {
+      this.statusColor = 'red';
+      this.statusText = 'A server error occured.'
+    }
+    else if (response === 6) {
+      this.statusColor = 'red';
+      this.statusText = 'An unknown error occured.'
     }
     this.buttonsActive = true;
   }

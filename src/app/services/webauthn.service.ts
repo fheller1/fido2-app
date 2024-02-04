@@ -21,12 +21,21 @@ export class WebauthnService {
   }
 
   async login(userName: string): Promise<number> {
-    let status: number = 0;
+    let status: number = 200;
     // @ts-ignore
     const options: PublicKeyCredentialRequestOptions = await firstValueFrom(this.httpService.getLoginOptions(userName))
-       .catch(err => {if (err.status === 404) status = 404;});
+       .catch(err => {status = err.status});
+    if (status === 500) {
+      return 5;
+    }
+    if (status === 0) {
+      return 4;
+    }
     if (status === 404) {
       return 1;
+    }
+    if (status !== 200) {
+      return 6;
     }
     if (options.allowCredentials) {
       options.allowCredentials.forEach(credential => {
@@ -54,18 +63,27 @@ export class WebauthnService {
     } else {
       localStorage.setItem('userName', userName);
       localStorage.setItem('session', response.session);
-      return 0;
+      return 200;
     }
   }
 
   async registration(user: User): Promise<number> {
+    let status: number = 200
     const options = await firstValueFrom(this.httpService
       .getRegistrationOptions(user.userName))
-      .catch(err => {return err;}
-    );
-    if (options.status && options.status === 409) {
-      return 1;
-    }
+      .catch(err => {status = err.status});
+      if (status === 500) {
+        return 5;
+      }
+      if (status === 0) {
+        return 4;
+      }
+      if (status === 409) {
+        return 1;
+      }
+      if (status !== 200) {
+        return 6;
+      }
     // @ts-ignore convert base64url string representation to byte array
     options.challenge = new Uint8Array([...atob(options.challenge.replace(/-/g, '+').replace(/_/g, '/'))]
       .map(char => char.charCodeAt(0))).buffer;
@@ -82,12 +100,19 @@ export class WebauthnService {
     }
     const verification = await firstValueFrom(this.httpService
       .verifyRegistration(credential, user.userName))
-      .catch(err => {return err;}
-    );
-    if (verification.status === 500 || verification.status === 404 ) {
-      return 3;
+      .catch(err => {status = err.status});
+    // @ts-ignore
+    if (status === 500) {
+      return 5;
     }
-        return 0;
+    // @ts-ignore
+    if (status === 0) {
+      return 4;
+    }
+    if (status !== 200) {
+      return 6;
+    }
+    return 200;
   }
 
 }

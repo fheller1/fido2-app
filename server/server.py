@@ -25,7 +25,7 @@ def create_app():
 
     db = SQLAlchemy()
     api = Flask(__name__)
-    CORS(api, origins=["http://localhost:4200"])
+    CORS(api, origins=["https://fido2.igd.fraunhofer.de"])
     
     db_name = 'fido2-app'
     api.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
@@ -73,7 +73,7 @@ def create_app():
         id = token_bytes(8)
 
         options = generate_registration_options(
-            rp_id="localhost",
+            rp_id="igd.fraunhofer.de",
             rp_name="AmbI Mini-Praktikum",
             user_name=userName,
             user_id=id
@@ -99,8 +99,8 @@ def create_app():
         verification = verify_registration_response(
             credential=request.get_json()['credential'],
             expected_challenge=expected_challenge,
-            expected_rp_id='localhost',
-            expected_origin='http://localhost:4200',
+            expected_rp_id='igd.fraunhofer.de',
+            expected_origin='https://fido2.igd.fraunhofer.de',
             require_user_verification=True
         )
 
@@ -154,8 +154,8 @@ def create_app():
             verification = verify_authentication_response(
                 credential=assertion,
                 expected_challenge=expected_challenge,
-                expected_rp_id='localhost',
-                expected_origin='http://localhost:4200',
+                expected_rp_id='igd.fraunhofer.de',
+                expected_origin='https://fido2.igd.fraunhofer.de',
                 credential_public_key=public_key,
                 credential_current_sign_count=sign_count,
                 require_user_verification=True

@@ -34,7 +34,7 @@ def create_app():
     db.init_app(api)
 
     class User(db.Model):
-        __tablename__ = 'users1000'
+        __tablename__ = 'users'
         user_name = db.Column(db.String, primary_key = True)
         credential_id = db.Column(db.String)
         challenge = db.Column(db.String)
@@ -53,6 +53,11 @@ def create_app():
             self.sign_count = 0
             self.session = None
             self.session_started = None
+
+
+    @api.before_request
+    def init_db_if_not_present():
+        db.create_all()
 
 
     @api.route('/register', methods=['POST'])
@@ -86,6 +91,7 @@ def create_app():
 
         print("Created credential creation challenge for user " + userName + ".")
         return options_to_json(options)
+
 
     @api.route('/register-verify', methods=['POST'])
     def validate_registration():
@@ -188,19 +194,6 @@ def create_app():
         
         print("Successfully logged out user " + userName + ".")
         return {"status": 200}
-
-
-    @api.route('/', methods=['GET'])
-    def get_data():
-        users = db.session.execute(db.select(User))
-        print([user for user in users])
-        return Response()
-    
-
-    @api.route('/create-all')
-    def create_all():
-        db.create_all()
-        return Response()
 
 
     return api

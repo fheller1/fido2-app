@@ -1,5 +1,7 @@
 # Fido2App
 
+Welcome to the repository for Fido2App. This web application serves as demonstrator for an implementation of the [Webauthn/FIDO2](https://webauthn.guide/) standard. You can build it and use it on your local machine to try out your phone or other devices that allow identification to register and log in.
+
 ## Run the flask server
 Navigate to `/fido2py`. Make sure Python is installed. Make sure the packages `flask, flask_cors, secrets, webauthn, time` are installed, if not, install with `pip install {package name}`.
 
